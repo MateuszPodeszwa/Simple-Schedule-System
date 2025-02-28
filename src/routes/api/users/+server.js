@@ -1,6 +1,7 @@
 import { db, dbHandler } from '$lib/server/db';
 import { users } from '$lib/server/db/schema';
 import { json } from '@sveltejs/kit';
+import { hashPassword } from '$lib/server/auth';
 
 /**
  * GET handler for retrieving users
@@ -37,12 +38,15 @@ export async function POST({ request }) {
             );
         }
 
+        // Hash the password before storing
+        const hashedPassword = hashPassword(userData.password);
+
         const [error, result] = await dbHandler(() =>
             db.insert(users).values({
                 firstName: userData.firstName,
                 lastName: userData.lastName,
                 email: userData.email,
-                password: userData.password, // In a real app, you'd hash this
+                password: hashedPassword, // Store the hashed password
                 role: userData.role || 'guest'
             }).returning()
         );
@@ -54,7 +58,11 @@ export async function POST({ request }) {
             );
         }
 
-        return json(result[0]);
+        // Don't return the password in the response
+        const userWithoutPassword = { ...result[0] };
+        delete userWithoutPassword.password;
+
+        return json(userWithoutPassword);
     } catch (e) {
         return new Response(
             JSON.stringify({ error: 'Invalid request' }),

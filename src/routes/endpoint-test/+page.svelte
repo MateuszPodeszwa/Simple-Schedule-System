@@ -4,6 +4,7 @@
     let users = [];
     let loading = true;
     let error = null;
+    let deleteLoading = false;
 
     // Form data
     let firstName = '';
@@ -51,6 +52,33 @@
 
         } catch (e) {
             error = e.message;
+        }
+    }
+
+    /**
+     * Deletes a user from the database
+     * @param {number} id - The ID of the user to delete
+     */
+    async function deleteUser(id) {
+        if (!confirm('Are you sure you want to delete this user?')) {
+            return;
+        }
+
+        deleteLoading = true;
+        try {
+            const response = await fetch(`/api/users/${id}`, {
+                method: 'DELETE'
+            });
+
+            if (!response.ok) throw new Error('Failed to delete user');
+
+            // Update the users array locally to remove the deleted user
+            users = users.filter(user => user.id !== id);
+
+        } catch (e) {
+            error = e.message;
+        } finally {
+            deleteLoading = false;
         }
     }
 </script>
@@ -102,6 +130,7 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Role</th>
+                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -110,7 +139,16 @@
                         <td>{user.id}</td>
                         <td>{user.firstName} {user.lastName}</td>
                         <td>{user.email}</td>
-                        <td>{user.role}</td>
+                        <td>{user.role || 'guest'}</td>
+                        <td>
+                            <button
+                                    class="delete-btn"
+                                    on:click={() => deleteUser(user.id)}
+                                    disabled={deleteLoading}
+                            >
+                                Delete
+                            </button>
+                        </td>
                     </tr>
                 {/each}
                 </tbody>
@@ -161,6 +199,17 @@
 
     button:hover {
         opacity: 0.9;
+    }
+
+    button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    .delete-btn {
+        background-color: #e53935;
+        padding: 0.3rem 0.6rem;
+        font-size: 0.85rem;
     }
 
     table {
