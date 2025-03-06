@@ -2,6 +2,16 @@
 	import Counter from './Counter.svelte';
 	import welcome from '$lib/images/svelte-welcome.webp';
 	import welcomeFallback from '$lib/images/svelte-welcome.png';
+	import { goto } from '$app/navigation';
+	import { onMount } from 'svelte';
+
+	/**
+	 * Redirects to the calculator page on component mount
+	 * This is a client-side redirect approach
+	 */
+	onMount(() => {
+		goto('/calculator');
+	});
 </script>
 
 <svelte:head>
