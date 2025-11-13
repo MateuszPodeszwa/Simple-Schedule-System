@@ -1,3 +1,5 @@
+The project is temporarily on hold as of JS. I’ve switched to C# programming and might redo this whole codebase as a .NET Razor Pages.
+
 # sv
 
 Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
