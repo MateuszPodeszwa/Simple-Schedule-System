@@ -1,4 +1,12 @@
-The project is temporarily on hold as of JS. I’ve switched to C# programming and might redo this whole codebase as a .NET Razor Pages.
+---
+
+This is a personal passion project born out of frustration with the "old-fashioned" way of doing things. My workplace used paper sheets for calculating hours, which left everything up to the individual. I wanted to make life easier, so I developed a simple calculator using a default SvelteKit template.
+
+Right now, it fulfils its purpose, but I know it could be better. I had plans to implement Machine Learning to parse PDF rotas and pre-calculate hours, but I’ve decided to put that on hold. No rush is needed, and I need to prioritise my university work and my future career in C# development.
+
+While I really want to finish this, I can't let it distract me from my academic focus. If my trajectory stays the same, I plan to pick this back up in late 2026 and migrate the whole thing to a .NET 10 Web API. Since I am becoming more proficient in C# than Node, this will make development much smoother. In the meantime, I might privately experiment with a Web API migration just to test the waters.
+
+---
 
 # sv
 
